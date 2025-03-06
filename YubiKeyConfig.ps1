@@ -7,25 +7,6 @@ function Get-YubiKeySerial {
     return $null
 }
 
-# Function to configure the YubiKey
-function Configure-YubiKey {
-    # Add your ykman configuration commands here
-    .\ykman.exe config usb --disable U2F -f
-    .\ykman.exe config usb --disable OATH -f
-    .\ykman.exe config usb --disable PIV -f
-    .\ykman.exe config usb --disable OPENPGP -f
-    .\ykman.exe config usb --disable HSMAUTH -f
-    
-    .\ykman.exe config nfc --disable OTP -f
-    .\ykman.exe config nfc --disable OATH -f
-    .\ykman.exe config nfc --disable U2F -f
-    .\ykman.exe config nfc --disable PIV -f
-    .\ykman.exe config nfc --disable OPENPGP -f
-    .\ykman.exe config nfc --disable HSMAUTH -f
-
-    # Add more configuration commands as needed
-}
-
 # Function to set the YubiKey lock code and return its value
 function Set-LockCode {
     $output = .\ykman.exe config set-lock-code --generate -f
@@ -48,6 +29,24 @@ function Write-YubiKeyLockCode{
 
 $Content = [PSCustomObject]@{SerialNumber = $serialNumber; YubiKeyConfigurationLockCode = $lockcode}
 $Content | Export-Csv -Path $env:USERPROFILE\YubiKeyLockCodes.csv -NoTypeInformation -Append
+}
+
+# Function to configure the YubiKey
+function Configure-YubiKey {
+    .\ykman.exe config usb --disable U2F -f
+    .\ykman.exe config usb --disable OATH -f
+    .\ykman.exe config usb --disable PIV -f
+    .\ykman.exe config usb --disable OPENPGP -f
+    .\ykman.exe config usb --disable HSMAUTH -f
+    
+    .\ykman.exe config nfc --disable OTP -f
+    .\ykman.exe config nfc --disable OATH -f
+    .\ykman.exe config nfc --disable U2F -f
+    .\ykman.exe config nfc --disable PIV -f
+    .\ykman.exe config nfc --disable OPENPGP -f
+    .\ykman.exe config nfc --disable HSMAUTH -f
+
+    # Add more configuration commands as needed
 }
 
 # Main script loop

@@ -152,8 +152,8 @@ function Set-WebAuthNFIPS{
 
     # Disable U2F over NFC and USB for WebAuthN
     # https://docs.yubico.com/hardware/yubikey/yk-tech-manual/fips-specifics.html#u2f
-    .\ykman.exe config usb -dU2F
-    .\ykman.exe config nfc -dU2F
+    .\ykman.exe config usb -dU2F -f
+    .\ykman.exe config nfc -dU2F -f
 
 }
 
@@ -234,17 +234,17 @@ while ($true) {
     
     
 
-    #Set-OTPFIPS
+    Set-OTPFIPS
     
-    #Set-OATHFIPS
+    Set-OATHFIPS
 
-    #Set-WebAuthNFIPS
+    Set-WebAuthNFIPS
 
     Set-PIVFIPS
 
-    #Configure-YubiKey
+    Configure-YubiKey
     
-    #Set-LockCode
+    Set-LockCode
 
     $CurrentYubiKeyConfiguration | ForEach-Object{ [pscustomobject]$_ } | Export-Csv -Path $Env:USERPROFILE\Documents\YubiKeyConfiguration.csv -Force -Append
     
